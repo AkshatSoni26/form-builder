@@ -1,5 +1,5 @@
 import React from "react";
-import { TextFieldFormElement } from "./TextField";
+import { TextFieldFormElement } from "./fields/TextField";
 
 export type ElementsType = "TextField"
 
@@ -47,4 +47,5 @@ export type FormElementsType = {
 
 export const FormElements: FormElementsType = {
     TextField: TextFieldFormElement,
+    
 }

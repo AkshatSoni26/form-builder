@@ -1,35 +1,30 @@
 "use client"
 
 import { MdTextFields } from "react-icons/md"
-import { ElementsType, FormElement, FormElementIstance, FormElements, SubmitFunction } from "./FormElements"
-import { Label } from "./ui/label"
-import { Input } from "./ui/input"
+import { ElementsType, FormElement, FormElementIstance, FormElements, SubmitFunction } from "../FormElements"
+import { Label } from "../ui/label"
+import { Input } from "../ui/input"
 import { z } from 'zod'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect, useState } from "react"
-import useDesigner from "./hooks/useDesigner"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
-import { Switch } from "./ui/switch"
+import useDesigner from "../hooks/useDesigner"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
+import { Switch } from "../ui/switch"
 import { cn } from "@/lib/utils"
+import { LuHeading1 } from "react-icons/lu"
 
-const type: ElementsType = "TextField"
+const type: ElementsType = "TitleField"
 
 const extraAttributes = {
-    label: "Text field",
-    helperText: "Helper text",
-    required: false,
-    placeholder: 'Value here...'
+    title: "Text field",
 }
 
 const propertiesSchema = z.object({
-    label: z.string().min(2).max(50),
-    helperText: z.string().max(200),
-    required: z.boolean().default(false),
-    placeholder: z.string().max(50)
+    title: z.string().min(2).max(50)
 })
 
-export const TextFieldFormElement: FormElement = {
+export const TitleFieldFormElement: FormElement = {
     type,
     construct: (id: string) => ({
         id,
@@ -37,22 +32,14 @@ export const TextFieldFormElement: FormElement = {
         extraAttributes
     }),
     designerBtnElement: {
-        Icon: MdTextFields,
+        Icon: LuHeading1,
         label: "Text  Field"
     },
     designerComponent: DesignerComponent,
     formComponet: FormComponet,
     propertiesComponent: PropertiesComponent,
 
-    validate: (FormElement: FormElementIstance, currentValue: string): boolean => {
-        const element = FormElement as CustomeInstance
-
-        if (element.extraAttributes.required) {
-            return currentValue.length > 0
-        }
-
-        return true
-    }
+    validate: () => true
 }
 
 type CustomeInstance = FormElementIstance & {
@@ -244,7 +231,7 @@ function FormComponet({
                 onBlur={(e) => {
                     if (!submitValue) return
 
-                    const valid = TextFieldFormElement.validate(element, e.target.value)
+                    const valid = TitleFieldFormElement.validate(element, e.target.value)
                     submitValue(element.id, e.target.value)
                 }}
             />
