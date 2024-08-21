@@ -10,7 +10,14 @@ function FormLinkShare({shareURL}:{shareURL: string}) {
 
     const [mounted, setMounted] = useState(false)
 
-    const shareLink = `${window?.location.origin}/submit/${shareURL}`
+    var shareLink: string;
+
+    if (typeof window !== 'undefined') {
+        shareLink = `${window?.location.origin}/submit/${shareURL}`
+    }
+    else{
+        shareLink = ''
+    }
 
     useEffect(
         () => {
@@ -24,7 +31,7 @@ function FormLinkShare({shareURL}:{shareURL: string}) {
 
   return (
     <div className='flex flex-grow gap-4 items-center'>
-        <Input value={shareLink} readOnly/>
+        <Input value={shareLink} readOnly className='w-[100%]'/>
         <Button
         className='max-w-[250px]'
         onClick={() => {

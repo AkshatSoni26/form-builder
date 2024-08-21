@@ -7,7 +7,9 @@ function VisitBtn({shareURL}:{shareURL: string}) {
 
     const [mounted, setMounted] = useState(false)
 
-    const shareLink = `${window?.location.origin}/submit/${shareURL}`
+    if (typeof window !== 'undefined') {
+    var shareLink = `${window?.location.origin}/submit/${shareURL}`
+    }
 
     useEffect(
         () => {
@@ -21,7 +23,9 @@ function VisitBtn({shareURL}:{shareURL: string}) {
 
   return (
     <Button className='w-[200px]' onClick={() => {
+        if (typeof window !== 'undefined') {
         window?.open(shareLink, "_blank")
+        }
     }}>
         Visit
     </Button>

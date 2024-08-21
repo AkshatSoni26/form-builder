@@ -1,16 +1,17 @@
 "use client"
 
 import { MdTextFields } from "react-icons/md"
-import { ElementsType, FormElement, FormElementIstance } from "./FormElements"
+import { ElementsType, FormElement, FormElementIstance, FormElements, SubmitFunction } from "./FormElements"
 import { Label } from "./ui/label"
 import { Input } from "./ui/input"
 import { z } from 'zod'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import useDesigner from "./hooks/useDesigner"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
 import { Switch } from "./ui/switch"
+import { cn } from "@/lib/utils"
 
 const type: ElementsType = "TextField"
 
@@ -42,6 +43,16 @@ export const TextFieldFormElement: FormElement = {
     designerComponent: DesignerComponent,
     formComponet: FormComponet,
     propertiesComponent: PropertiesComponent,
+
+    validate: (FormElement: FormElementIstance, currentValue: string): boolean => {
+        const element = FormElement as CustomeInstance
+
+        if (element.extraAttributes.required) {
+            return currentValue.length > 0
+        }
+
+        return true
+    }
 }
 
 type CustomeInstance = FormElementIstance & {
@@ -197,20 +208,49 @@ function DesignerComponent({
 }
 
 function FormComponet({
-    elementInstance
-}: { elementInstance: FormElementIstance }) {
-    const element = elementInstance as CustomeInstance
+    elementInstance, 
+    submitValue, 
+    isInvalid,
+    defaultValues
+}: { 
+    elementInstance: FormElementIstance, 
+    submitValue?: SubmitFunction, 
+    isInvalid?: boolean,
+    defaultValues?:string
+ }) {
 
+    const [value, setValue] = useState(defaultValues || "")
+    const [error, setError] = useState(false)
+
+    useEffect(
+        () => {
+            setError(isInvalid === true)
+        }, [isInvalid]
+    )
+
+    const element = elementInstance as CustomeInstance
     const { label, helperText, placeholder, required } = element.extraAttributes
 
     return (
         <div className="flex flex-col gap-2 w-full">
-            <Label>
+            <Label className={cn(error && "text-red-500")}>
                 {label}
                 {required && "*"}
             </Label>
-            <Input placeholder={placeholder} />
-            {helperText && <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>}
+            <Input
+                className={cn(error && "border-red-500")}
+                placeholder={placeholder}
+                onChange={(e) => setValue(e.target.value)}
+                onBlur={(e) => {
+                    if (!submitValue) return
+
+                    const valid = TextFieldFormElement.validate(element, e.target.value)
+                    submitValue(element.id, e.target.value)
+                }}
+            />
+            {helperText && <p className={cn("text-muted-foreground text-[0.8rem]",
+                error && 'text-red-500'
+            )}>{helperText}</p>}
         </div>
     )
 }
