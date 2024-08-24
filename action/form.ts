@@ -75,6 +75,8 @@ export async function CreateForm(data: formSchemaType) {
 export async function GetForms() {
     const user = await currentUser()
 
+    console.log({user})
+
     if(!user) {
         throw new UserNotFoundErr()
     }
