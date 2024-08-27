@@ -2,7 +2,7 @@ import React, { startTransition, useTransition } from 'react'
 import { Button } from './ui/button'
 import { MdOutlinePublish } from 'react-icons/md'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './ui/alert-dialog'
-import { FaIcons } from 'react-icons/fa'
+import { FaIcons, FaSpinner } from 'react-icons/fa'
 import { toast } from './ui/use-toast'
 import { PublishForm } from '@/action/form'
 import { useRouter } from 'next/navigation'
@@ -56,7 +56,7 @@ function PublishFormBtn({id}: {id: number}) {
             e.preventDefault()
             startTransition(publishForm)
           }}> 
-            Proceed {loading && <FaIcons className='animate-spin'/> }
+            Proceed {loading && <FaSpinner className='animate-spin'/> }
             </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
