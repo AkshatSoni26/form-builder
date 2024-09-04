@@ -1,9 +1,7 @@
 # Form Builder Project
 
-<video width="600" controls>
-  <source src="./assets/demo.gif" type="video/gif">
-  Your browser does not support the video tag.
-</video>
+![Form Builder Tutorial](./assets/demo.gif)
+
 
 ## Overview
 
