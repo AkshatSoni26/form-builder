@@ -1,5 +1,10 @@
 # Form Builder Project
 
+<video width="600" controls>
+  <source src="./assets/demo.gif" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## Overview
 
 The Form Builder project is a web application that allows users to create custom forms using a drag-and-drop interface. It is designed to be intuitive and flexible, enabling users to build forms quickly without needing to write code. The application is built using a modern tech stack, ensuring it is both performant and scalable.
@@ -60,4 +65,5 @@ Run the development server:
 npm run dev
 ```
 
-The application will be available at `http://localhost:3000`.
+The application will be available at `http://localhost:5000`.
+
